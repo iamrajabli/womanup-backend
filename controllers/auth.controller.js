@@ -8,6 +8,8 @@ const UserDto = require('../dtos/user.dto');
 
 const HttpError = require('../errors/http.error');
 
+const bcrypt = require('bcrypt');
+
 
 class AuthController {
 
@@ -53,8 +55,7 @@ class AuthController {
             }
 
             // Проверка хешированного пароля
-            // const passMatch = await bcrypt.compare(password, user.password);
-            const passMatch = password == user.password
+            const passMatch = await bcrypt.compare(password, user.password);
 
 
             // Возвращаем ошибку, если пароль неверный
@@ -75,11 +76,6 @@ class AuthController {
         }
 
     });
-
-
-    tasks = catchAsyncErrors(async (req, res, next) => {
-        res.send('salam')
-    })
 
 
     logout = catchAsyncErrors(async (req, res, next) => {

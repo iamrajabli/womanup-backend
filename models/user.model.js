@@ -18,15 +18,14 @@ const userSchema = new Schema({
     },
 }, { timestamps: true });
 
-// userSchema.pre('save', function (next) {
-//     bcrypt.hash(this.password, 10, (err, hashPass) => {
-//         if (!err) {
-//             this.password = hashPass;
-//             next();
-//         }
-//     })
-//     next();
-// })
+userSchema.pre('save', function (next) {
+    bcrypt.hash(this.password, 10, (err, hashPass) => {
+        if (!err) {
+            this.password = hashPass;
+            next();
+        }
+    })
+})
 
 
 module.exports = model('User', userSchema);
